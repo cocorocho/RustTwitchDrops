@@ -5,7 +5,10 @@ import os
 from chromedriver import ChromeDriverDownloader
 from twitch import Twitch
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+if getattr(sys, 'frozen', False):
+    app_path = os.path.dirname(sys.executable)
+else:
+    app_path = os.path.dirname(os.path.abspath(__file__))
 
 LOGNAME = "log.txt"
 
