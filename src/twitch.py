@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from threading import Thread
 from time import sleep
+from sys import exit
 import json
 
 from facepunch import Facepunch
@@ -164,7 +165,7 @@ class Twitch(Checks, Facepunch):
                     self.claim_drops()
                     self.currently_watching = None
 
-                if not self.currently_watching.is_online:
+                elif not self.currently_watching.is_online:
                     self.currently_watching = None
             else:
                 for stream in self.streams:
@@ -177,5 +178,6 @@ class Twitch(Checks, Facepunch):
             if self.progress_stalling(self.current_progress):
                 self.streams.remove(self.currently_watching)
                 self.currently_watching = None
+
             self.print_stats()
-            sleep(30)
+            sleep(60)
