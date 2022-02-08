@@ -89,7 +89,7 @@ class Checks:
         :param int progress: Current progress
         """
         if self.MAX_PROGRESS_REPEAT_COUNT == self.progress_check_count:
-            print_with_time(f"Progress is stalling with {self.currently_watching}, changing stream.")
+            print_with_time(f"Progress is stalling with {self.currently_watching.name}, changing stream.")
             return True
         elif progress == self.last_progress_value:
             self.progress_check_count += 1
