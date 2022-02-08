@@ -92,7 +92,7 @@ class Checks:
             print_with_time(f"Progress is stalling with {self.currently_watching}, changing stream.")
             return True
         elif progress == self.last_progress_value:
-            self.last_progress_value += 1
+            self.progress_check_count += 1
             return False
         else:
             self.progress_check_count = 0
