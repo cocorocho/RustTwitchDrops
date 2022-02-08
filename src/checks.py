@@ -88,9 +88,12 @@ class Checks:
 
         :param int progress: Current progress
         """
-        if progress  == self.last_progress_value and self.MAX_PROGRESS_REPEAT_COUNT == self.progress_check_count:
+        if self.MAX_PROGRESS_REPEAT_COUNT == self.progress_check_count:
             print_with_time(f"Progress is stalling with {self.currently_watching}, changing stream.")
             return True
+        elif progress == self.last_progress_value:
+            self.last_progress_value += 1
+            return False
         else:
             self.progress_check_count = 0
             self.last_progress_value = progress
@@ -106,5 +109,6 @@ class Checks:
             button = modal.find_element("xpath", ".//button[@data-a-target='account-checkup-generic-modal-secondary-button']")
             button.click()
             print_with_time("Change password warning dismissed.")
+
         except (NoSuchElementException):
             pass
