@@ -3,4 +3,5 @@ venv
 /*.spec
 /build
 /dist
-/assets
+driver
+log.txt
