@@ -33,31 +33,35 @@ class Checks:
         Check claimed drops
         """
         self.go_to_inventory()
-        root_element = WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located(
-                (By.XPATH, "//div[@data-test-selector='drops-list__wrapper']")
+        try:
+            root_element = WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//div[@data-test-selector='drops-list__wrapper']")
+                )
             )
-        )
-        root_element_html = root_element.text.lower()
-        _to_remove = []
+            root_element_html = root_element.text.lower()
+            _to_remove = []
 
-        for streamer in self.streams:
-            if streamer.name.lower() in root_element_html:
-                print_with_time(f"You have already claimed {streamer.name}'s drop")
-                _to_remove.append(streamer)
+            for streamer in self.streams:
+                if streamer.name.lower() in root_element_html:
+                    print_with_time(f"You have already claimed {streamer.name}'s drop")
+                    _to_remove.append(streamer)
 
-            # CAPTAIN MYKO AND ELLA NAMES WERE WRITTEN RANDOMLY ON TWITCH
-            # THIS IS NOT NEEDED IF STREAMER NAMES ARE WRITTEN CORRECTLY
-            elif "captain myko" in root_element_html and streamer.name.lower() == "captainmyko":
-                _to_remove.append(streamer)
-                print_with_time(f"You have already claimed {streamer.name}'s drop")
-            elif "ella" in root_element_html and streamer.name.lower() == "ella_playz":
-                print_with_time(f"You have already claimed {streamer.name}'s drop")
-                _to_remove.append(streamer)
-            #############################################################
-        
-        for i in _to_remove:
-            self.streams.remove(i)
+                # CAPTAIN MYKO AND ELLA NAMES WERE WRITTEN RANDOMLY ON TWITCH
+                # THIS IS NOT NEEDED IF STREAMER NAMES ARE WRITTEN CORRECTLY
+                elif "captain myko" in root_element_html and streamer.name.lower() == "captainmyko":
+                    _to_remove.append(streamer)
+                    print_with_time(f"You have already claimed {streamer.name}'s drop")
+                elif "ella" in root_element_html and streamer.name.lower() == "ella_playz":
+                    print_with_time(f"You have already claimed {streamer.name}'s drop")
+                    _to_remove.append(streamer)
+                #############################################################
+            
+            for i in _to_remove:
+                self.streams.remove(i)
+
+        except TimeoutException:
+            print_with_time("Couldn't find drops element, will again later")
 
     def get_progress(self) -> int:
         """
