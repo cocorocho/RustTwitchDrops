@@ -28,6 +28,7 @@ class Twitch(Checks, Facepunch):
         try:
             options = webdriver.ChromeOptions()
             options.add_argument("--log-level=3")
+            options.add_argument("--disable-gpu")
             self.driver = webdriver.Chrome("./driver/chromedriver.exe", options=options)
         except WebDriverException:
             print_with_time("Latest version of chrome needs to be installed")
@@ -47,7 +48,7 @@ class Twitch(Checks, Facepunch):
         self.streams = self.get_drop_data()
 
         # Check claimed drops
-        self.check_claimed_drops()
+        self.claim_drops()
 
         # Apply config
         self.apply_config()
@@ -110,7 +111,7 @@ class Twitch(Checks, Facepunch):
             while claim_attempts < 5:
                 for element in claim_buttons:
                     try:
-                        element.click()
+                        self.driver.execute_script("arguments[0].click();", element)
                         sleep(5)
                     except (ElementNotInteractableException, StaleElementReferenceException):
                         claim_attempts += 1
@@ -143,6 +144,7 @@ class Twitch(Checks, Facepunch):
         :param Streamer streamer: Streamer object
         """
         self.driver.get(streamer.stream_url)
+        self.driver.switch_to.window(self.driver.current_window_handle)
         self.currently_watching = streamer
 
     def print_stats(self) -> None:
@@ -159,7 +161,7 @@ class Twitch(Checks, Facepunch):
         Start getting drops!
         """
         while self.streams:
-            if self.currently_watching:            
+            if self.currently_watching:
                 if self.current_progress == 100:
                     self.go_to_inventory()
                     self.claim_drops()
@@ -176,7 +178,6 @@ class Twitch(Checks, Facepunch):
             self.current_progress = self.get_progress()
 
             if self.progress_stalling(self.current_progress):
-                self.streams.remove(self.currently_watching)
                 self.currently_watching = None
 
             self.print_stats()
