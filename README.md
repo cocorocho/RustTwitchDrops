@@ -12,6 +12,8 @@
 
 ## To Use 🚀
 
+### *[IMPORTANT] When changing streams, the browser will be the active window. Keep that in mind!*
+
 1. Download the latest release from [releases](https://github.com/cocorocho/RustTwitchDrops/releases/tag/v1.0.0 "go to releases") or [download directly](https://github.com/cocorocho/RustTwitchDrops/releases/latest/download/RustTwitchDrops.zip)
 
 2. Unzip ```Rust Twitch Drops.exe```
@@ -29,12 +31,15 @@
 
 ## FAQ
 **Q: What does this do?**
+
 A: This bot automatically farms Rust Twitch drops for you.
 
 **Q: But how?**
+
 A: It uses an automated browser (**chromedriver**) in this case and does what you do, but without you.
 
 **Q: My bot crashed, what do i do?**
+
 **A**: Crashes may happen, there will be a ```log.txt``` file inside the directory. You can share the error with me.
 
 
