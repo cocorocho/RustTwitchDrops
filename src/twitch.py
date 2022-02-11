@@ -177,8 +177,14 @@ class Twitch(Checks, Facepunch):
             
             self.current_progress = self.get_progress()
 
-            if self.progress_stalling(self.current_progress):
+            if self.currently_watching and self.progress_stalling(self.current_progress):
                 self.currently_watching = None
 
             self.print_stats()
             sleep(60)
+
+        print_with_time("=" * 20)
+        print_with_time("All drops are claimed!")
+        print_with_time("=" * 20)
+        self.driver.close()
+        
