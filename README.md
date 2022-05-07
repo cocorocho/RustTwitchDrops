@@ -2,7 +2,7 @@
 
 #### *Automatically farm Twitch drops for Rust*
 
-- #### Twitch Drops Round 14 ✔️
+- #### Twitch Drops Round 17 ✔️
 
 ## Requirements
 
