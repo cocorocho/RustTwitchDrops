@@ -1,5 +1,5 @@
 ---
-name: "pre-release"
+name: "build project"
 
 on:
   push:
@@ -7,12 +7,11 @@ on:
       - "master"
 
 jobs:
-  pre-release:
-    name: "Pre Release"
+  build:
+    name: "build project"
     runs-on: "windows-latest"
 
     steps:
-      # ...
       - name: Setup Python 3.96
         uses: actions/setup-python@v2
         with:
