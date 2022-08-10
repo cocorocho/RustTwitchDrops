@@ -37,7 +37,12 @@ class Facepunch(Session):
 
         for tile in drop_tiles:
             stream_url = tile.get("href")
-            streamer_name = tile.find("span", attrs={"class": "streamer-name"}).text
+            try:
+                streamer_name = tile.find("span", attrs={"class": "streamer-name"}).text
+            except AttributeError:
+                # If streamer name doesn't exist, drop is general drop.
+                continue
+            
             _drop_name = tile.find("span", attrs={"class": "drop-name"}).text
             
             if "LR" in _drop_name.upper():
