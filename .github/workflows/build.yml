@@ -24,8 +24,11 @@ jobs:
 
       - name: Build project
         run: |
-          pyinstaller ./src/main.py -F -n "Rust Twitch Drops" -i ./assets/t.ico
+          pyinstaller ./src/main.py -F -n "RustTwitchDrops" -i ./assets/t.ico
 
+      - name: "zip release"
+        run: ls -la
+        
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
