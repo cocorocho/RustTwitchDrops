@@ -12,10 +12,10 @@ jobs:
     runs-on: "windows-latest"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Python 3.96
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.9
       
@@ -26,9 +26,6 @@ jobs:
         run: |
           pyinstaller ./src/main.py -F -n "Rust Twitch Drops" -i ./assets/t.ico
 
-      - name: "zip release"
-        run: ls -la
-        
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
