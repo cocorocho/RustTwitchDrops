@@ -27,7 +27,7 @@ jobs:
           pyinstaller ./src/main.py -F -n "RustTwitchDrops" -i ./assets/t.ico
 
       - name: "zip release"
-        run: ls -la
+        run: 7z a RustTwitchDrops.zip ./dist/RustTwitchDrops/*.exe
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
