@@ -47,16 +47,6 @@ class Checks:
                     print_with_time(f"You have already claimed {streamer.name}'s drop")
                     _to_remove.append(streamer)
 
-                # CAPTAIN MYKO AND ELLA NAMES WERE WRITTEN RANDOMLY ON TWITCH
-                # THIS IS NOT NEEDED IF STREAMER NAMES ARE WRITTEN CORRECTLY
-                elif "captain myko" in root_element_html and streamer.name.lower() == "captainmyko":
-                    _to_remove.append(streamer)
-                    print_with_time(f"You have already claimed {streamer.name}'s drop")
-                elif "ella" in root_element_html and streamer.name.lower() == "ella_playz":
-                    print_with_time(f"You have already claimed {streamer.name}'s drop")
-                    _to_remove.append(streamer)
-                #############################################################
-            
             for i in _to_remove:
                 self.streams.remove(i)
 
