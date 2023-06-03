@@ -5,4 +5,5 @@ venv
 /dist
 driver
 log.txt
+cookies.pkl
 *.code-workspace
