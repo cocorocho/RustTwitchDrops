@@ -25,12 +25,9 @@ jobs:
       - name: Build project
         run: |
           pyinstaller ./src/main.py -F -n "RustTwitchDrops" -i ./assets/t.ico
-    
-      - name: debug
-        run: dir
 
       - name: "zip release"
-        run: 7z a RustTwitchDrops.zip ./dist/RustTwitchDrops/*.exe
+        run: 7z a RustTwitchDrops.zip ./dist/*.exe
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
