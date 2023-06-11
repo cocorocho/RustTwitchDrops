@@ -1,3 +1,4 @@
+altgraph==0.17.3
 appdirs==1.4.4
 async-generator==1.10
 attrs==21.4.0
@@ -18,12 +19,15 @@ lxml==4.7.1
 lz4==4.3.2
 outcome==1.1.0
 parse==1.19.0
+pefile==2023.2.7
 pycparser==2.21
 pycryptodomex==3.18.0
 pyee==8.2.2
+pyinstaller-hooks-contrib==2023.3
 pyOpenSSL==22.0.0
 pyppeteer==1.0.2
 pyquery==1.4.3
+pywin32-ctypes==0.2.0
 requests==2.27.1
 selenium==4.1.0
 six==1.16.0
