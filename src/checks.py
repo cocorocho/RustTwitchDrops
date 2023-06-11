@@ -62,7 +62,7 @@ class Checks:
         try:
             parent_element = self.driver.find_element("xpath", "//a[@href='/inventory'][@data-a-target='inventory-dropdown-link']")
             progress_element = parent_element.find_element("xpath", ".//div[@role='progressbar']")
-            progress = int(progress_element.get_attribute("aria-valuenow"))
+            progress = int(progress_element.get_attribute("aria-valuenow")) or 0
             return progress
 
         except (TimeoutException, NoSuchElementException):
@@ -83,7 +83,7 @@ class Checks:
         :param int progress: Current progress
         """
         if self.MAX_PROGRESS_REPEAT_COUNT == self.progress_check_count:
-            print_with_time(f"Progress is stalling with {self.currently_watching.name}, changing stream.")
+            print_with_time(f"Progress is stalling with {str(self.currently_watching)}, changing stream.")
             return True
         elif progress == self.last_progress_value:
             self.progress_check_count += 1

@@ -19,14 +19,15 @@ from utils import print_with_time
 from broadcaster import get_broadcasters
 from settings import settings
 
-from constants import CLIENT_ID
+from constants import CLIENT_ID, USER_DEFINED_STREAMS_FILENAME
+from exceptions import UserDefinedStreamsLoadException
 from twitchlogin import TwitchLogin
 
 
 class Twitch(Checks):
-    ##################
-    #### ROUND 23 ####
-    ##################
+    ###################################
+    #### RUST TWICH DROPS ROUND 23 ####
+    ###################################
     TWITCH_URL = "https://twitch.tv"
 
     def __init__(self):
@@ -61,8 +62,11 @@ class Twitch(Checks):
         
         self.currently_watching = None
         self.driver.get(self.TWITCH_URL)
+
+        # Apply config
+        self.apply_config()
         
-        # Wait a minute for Weak Password warning by twitch
+        # Wait 30 secs for Weak Password warning by twitch
         sleep(30)
         self.check_weak_password_warning()
 
@@ -71,9 +75,6 @@ class Twitch(Checks):
 
         # Check claimed drops
         self.claim_drops()
-
-        # Apply config
-        self.apply_config()
 
     def login(self):
         if not os.path.isfile(self.cookies_file):
@@ -90,6 +91,8 @@ class Twitch(Checks):
         """
         Apply config to driver
         """
+        print_with_time("Applying config")
+        
         for k, v in settings.items():
             script = f"""window.localStorage.setItem({json.dumps(k, separators=(',', ':'))}, '{json.dumps(v, separators=(',', ':'))}');"""
             self.driver.execute_script(script)
@@ -122,12 +125,14 @@ class Twitch(Checks):
         """
         Claim drops
         """
+        print_with_time("Checking and claiming drops in inventory")
+
         self.go_to_inventory()
         sleep(10)
         try:
-            claim_buttons = WebDriverWait(self.driver, 60).until(
+            claim_buttons = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_all_elements_located(
-                    (By.XPATH, "//button[@data-test-selector='DropsCampaignInProgressRewardPresentation-claim-button']")
+                    (By.XPATH, "//button[@class='ScCoreButton-sc-ocjdkq-0 ScCoreButtonPrimary-sc-ocjdkq-1 dNGoHt hdAxZi']")
                 )
             )
             claim_attempts = 0
@@ -135,7 +140,12 @@ class Twitch(Checks):
                 for element in claim_buttons:
                     try:
                         self.driver.execute_script("arguments[0].click();", element)
+
+                        if self.currently_watching:
+                            self.claim_drop_for_broadcaster(self.currently_watching)
+
                         sleep(5)
+                        print_with_time("Claimed a drop!")
                     except (ElementNotInteractableException, StaleElementReferenceException):
                         claim_attempts += 1
 
@@ -175,7 +185,12 @@ class Twitch(Checks):
         Print current channel and drop progress
         """
         if self.currently_watching:
-            print_with_time(f"Currently watching {self.currently_watching.name} -> Drop Progress {self.current_progress}%")
+            msg = f"Currently watching {str(self.currently_watching)}"
+
+            if str(self.current_progress).isnumeric():
+                msg += f"-> Drop Progress {self.current_progress}%"
+
+            print_with_time(msg)
         else:
             print_with_time(f"Currently not watching anyone")
 
@@ -204,10 +219,64 @@ class Twitch(Checks):
                 self.currently_watching = None
 
             self.print_stats()
-            sleep(60)
+            sleep(15)
 
         print_with_time("=" * 20)
         print_with_time("All drops are claimed!")
         print_with_time("=" * 20)
         self.driver.close()
         
+    def claim_drop_for_broadcaster(self, broadcaster) -> None:
+        if settings.get("use_user_defined_broadcasters", False):
+            print_with_time(f"Updating drop data for {str(broadcaster)}")
+            with open(USER_DEFINED_STREAMS_FILENAME) as f:
+                try:
+                    data = json.load(f)
+                except json.decoder.JSONDecodeError:
+                    raise UserDefinedStreamsLoadException()
+                    
+                broadcaster_data_index = self.find_streamer_data_index(data, broadcaster)
+                self.update_broadcaster_drop_data(data, broadcaster_data_index, broadcaster)
+
+                # Update file
+                with open(USER_DEFINED_STREAMS_FILENAME, "w") as f:
+                    json.dump(data, f)
+                return
+        
+        for stream in self.streams:
+            if stream is broadcaster:
+                self.streams.remove(stream)
+                break
+
+    def find_streamer_data_index(self, data, broadcaster) -> int:
+        for i, row in enumerate(data):
+            url = row.get("url") if isinstance(row, dict) else row
+
+            if url == broadcaster.url:
+                return i
+
+    def update_broadcaster_drop_data(self, data, index, broadcaster) -> None:
+        broadcaster_data = data[index]
+
+        if isinstance(broadcaster_data, dict):
+            num_drops = broadcaster_data.get("num_drops", None)
+
+            try:
+                num_drops = int(num_drops)
+                num_drops -= 1
+
+                if num_drops == 0:
+                    data.pop(index)
+                    self.streams.remove(broadcaster)
+                    return
+                
+                broadcaster_data["num_drops"] = num_drops
+            except TypeError:
+                data.pop(index)
+                self.streams.remove(broadcaster)
+            finally:
+                return
+        
+        # Plain url
+        self.streams.remove(broadcaster)
+        data.pop(index)

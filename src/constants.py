@@ -183,3 +183,6 @@ class GQLOperations:
             }
         },
     }
+
+
+USER_DEFINED_STREAMS_FILENAME = "user_defined_streams.json"

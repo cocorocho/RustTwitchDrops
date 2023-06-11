@@ -2,21 +2,32 @@ import json
 from pathlib import Path
 
 
-def load_settings(settings) -> dict:
-    file_name = "config.json"
+default_settings = {
+    "video-muted": { "default": True },
+    "mature": True,
+    "video-quality": { "default": "160p30" }
+}
 
-    if Path(file_name).is_file():
-        with open(file_name) as config_file:
-            conf = json.loads(config_file.read())
-            settings |= conf
+def load_settings(settings) -> dict:
+    settings_file = Path("config.json")
+
+    if not settings_file.is_file():
+        create_settings_file()
+
+
+    with open(settings_file) as config_file:
+        conf = json.loads(config_file.read())
+        settings |= conf
 
     return settings
 
-default_settings = {
-    "video-muted": True,
-    "mature": True,
-    "video-quality": "160p30"
-}
+
+def create_settings_file(file: Path):
+    file.touch()
+
+    with open(file, "w") as f:
+        f.write(default_settings)
+
 
 settings = default_settings
 
