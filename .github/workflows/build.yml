@@ -24,7 +24,7 @@ jobs:
 
       - name: Build project
         run: |
-          pyinstaller ./src/main.py -F -n "RustTwitchDrops" -i ./assets/t.ico
+          pyinstaller ./src/main.py -n "RustTwitchDrops" -i ./assets/t.ico
 
       - name: "zip release"
         run: 7z a RustTwitchDrops.zip ./dist/*.exe
