@@ -7,3 +7,4 @@ driver
 log.txt
 cookies.pkl
 *.code-workspace
+user_defined_streams.json
