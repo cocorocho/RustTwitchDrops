@@ -12,7 +12,7 @@ def load_settings(settings) -> dict:
     settings_file = Path("config.json")
 
     if not settings_file.is_file():
-        create_settings_file()
+        create_settings_file(settings_file)
 
 
     with open(settings_file) as config_file:
@@ -26,7 +26,7 @@ def create_settings_file(file: Path):
     file.touch()
 
     with open(file, "w") as f:
-        f.write(default_settings)
+        json.dump(default_settings, f)
 
 
 settings = default_settings

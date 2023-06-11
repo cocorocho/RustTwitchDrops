@@ -1,4 +1,9 @@
 {
-    "video-muted": { "default": true },
-    "video-quality": { "default": "160p30" }
+    "video-muted": {
+        "default": true
+    },
+    "mature": true,
+    "video-quality": {
+        "default": "160p30"
+    }
 }
