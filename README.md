@@ -4,19 +4,59 @@
 #### Streamers
 <div id="streamers">
 	<ul>
-	    <li>https://www.twitch.tv/auronplay</li>
-	    <li>https://www.twitch.tv/Rubius</li>
-	    <li>https://www.twitch.tv/TheGrefg</li>
-	    <li>https://www.twitch.tv/rivers_gg</li>
-	    <li>https://www.twitch.tv/ibai</li>
-	    <li>https://www.twitch.tv/elxokas</li>
-	    <li>https://www.twitch.tv/ElSpreen</li>
-	    <li>https://www.twitch.tv/Carola</li>
-	    <li>https://www.twitch.tv/Ricoy</li>
-	    <li>https://www.twitch.tv/knekro</li>
-	    <li>https://www.twitch.tv/Agustabell212</li>
-	    <li>https://www.twitch.tv/Silithur</li>
-	    <li>https://www.twitch.tv/IlloJuan</li>
+	    <li>
+            https://www.twitch.tv/auronplay
+            <div id="drop-name">Auron Large Box</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/Rubius
+            <div id="drop-name">Rubius Rainbow Chestplate</div>
+            <div id="drop-name">Rubius Rainbow Facemask</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/TheGrefg
+            <div id="drop-name">TheGrefg Semi Auto Rifle</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/rivers_gg
+            <div id="drop-name">Rivers Python</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/ibai
+            <div id="drop-name">ibai metal door</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/elxokas
+            <div id="drop-name">Elxokas Bandana</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/ElSpreen
+            <div id="drop-name">Spreen wooden door</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/Carola
+            <div id="drop-name">Carola Garage Door</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/Ricoy
+            <div id="drop-name">Ricoy AK47</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/knekro
+            <div id="drop-name">Knekro shotgun</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/Agustabell212
+            <div id="drop-name">Agustabell Thompson</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/Silithur
+            <div id="drop-name">Silithur Rocket Launcher</div>
+        </li>
+	    <li>
+            https://www.twitch.tv/IlloJuan
+            <div id="drop-name">Illojuan Sleeping bag</div>
+        </li>
 	</ul>
 </div>
 
