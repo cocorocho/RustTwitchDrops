@@ -20,7 +20,7 @@ session_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Appl
 session.headers.update(session_headers)
 
 
-def get_broadcaster_urls() -> List[str]:
+def get_pre_defined_broadcasters() -> List[str]:
     url = "https://github.com/cocorocho/RustTwitchDrops"
     
     try:
@@ -28,10 +28,22 @@ def get_broadcaster_urls() -> List[str]:
         soup = BeautifulSoup(response.content, features="lxml")
     
         streams_container = soup.find("div", {"id": "user-content-streamers"})
-        url_elems = streams_container.find_all("a", {"href": True})
+        list_items = streams_container.find_all("li")
 
-        stream_urls = [url["href"] for url in url_elems]
-        return stream_urls
+        broadcasters = []
+
+        for li in list_items:
+            url = li.find("a", {"href": True})
+            drop_names = li.find_all("div", {"id": "user-content-drop-name"})
+
+            broadcasters.append(
+                Broadcaster(
+                    url=url["href"],
+                    drop_names=[i.get_text().strip() for i in drop_names]
+                )
+            )
+            
+        return broadcasters
     except Exception as err:
         print("Error getting list of streamers")
         logger.error("Error getting list of streamers")
@@ -40,9 +52,10 @@ def get_broadcaster_urls() -> List[str]:
 
 
 class Broadcaster:
-    def __init__(self, url: str, num_drops: int=1) -> None:
+    def __init__(self, url: str, num_drops: int=1, drop_names: List[str]=None) -> None:
         self.url = url
         self.num_drops = num_drops
+        self.drop_names = drop_names
 
     def __str__(self) -> str:
         return self.url
@@ -93,7 +106,10 @@ def get_user_defined_broadcasters() -> Optional[List[Broadcaster]]:
         try:
             data = json.load(f)
         except json.decoder.JSONDecodeError:
-            raise UserDefinedStreamsLoadException()
+            print_with_time(f"Couldn't read {USER_DEFINED_STREAMS_FILENAME}")
+            print_with_time("Either file is empty or format is invalid")
+            print_with_time("Continuing")
+            return
 
         for row in data:
             if isinstance(row, dict):
@@ -116,8 +132,6 @@ def get_broadcasters() -> List[Broadcaster]:
         settings["use_user_defined_broadcasters"] = True
         return user_defined_broadcasters
 
-    broadcaster_urls = get_broadcaster_urls()
+    broadcasters = get_pre_defined_broadcasters()
 
-    return [
-        Broadcaster(url) for url in broadcaster_urls
-    ]
+    return broadcasters

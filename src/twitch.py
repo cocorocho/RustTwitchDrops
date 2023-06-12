@@ -67,8 +67,8 @@ class Twitch(Checks):
         self.apply_config()
         
         # Wait 30 secs for Weak Password warning by twitch
-        sleep(30)
-        self.check_weak_password_warning()
+        # sleep(30)
+        # self.check_weak_password_warning()
 
         # Get drop names, streamer names, stream urls etc.
         self.streams = get_broadcasters()

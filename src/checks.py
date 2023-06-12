@@ -36,16 +36,22 @@ class Checks:
         try:
             root_element = WebDriverWait(self.driver, 30).until(
                 EC.presence_of_element_located(
-                    (By.XPATH, "//div[@data-test-selector='drops-list__wrapper']")
+                    (By.XPATH, "//h5[contains(text(), 'Claimed')]/../../..")
                 )
             )
             root_element_html = root_element.text.lower()
             _to_remove = []
 
-            for streamer in self.streams:
-                if streamer.name.lower() in root_element_html:
-                    print_with_time(f"You have already claimed {streamer.name}'s drop")
-                    _to_remove.append(streamer)
+            for broadcaster in self.streams:
+                drops = broadcaster.drop_names
+
+                for drop_name in drops:
+                    if drop_name.lower() in root_element_html:
+                        broadcaster.drop_names.remove(drop_name)
+                        print_with_time(f"You have already claimed {broadcaster.url}'s drop")
+
+                        if len(broadcaster.drop_names) == 0:
+                            _to_remove.append(broadcaster)
 
             for i in _to_remove:
                 self.streams.remove(i)
