@@ -45,13 +45,14 @@ class Checks:
             for broadcaster in self.streams:
                 drops = broadcaster.drop_names
 
-                for drop_name in drops:
-                    if drop_name.lower() in root_element_html:
-                        broadcaster.drop_names.remove(drop_name)
-                        print_with_time(f"You have already claimed {broadcaster.url}'s drop")
+                if drops:
+                    for drop_name in drops:
+                        if drop_name.lower() in root_element_html:
+                            broadcaster.drop_names.remove(drop_name)
+                            print_with_time(f"You have already claimed {broadcaster.url}'s drop")
 
-                        if len(broadcaster.drop_names) == 0:
-                            _to_remove.append(broadcaster)
+                            if len(broadcaster.drop_names) == 0:
+                                _to_remove.append(broadcaster)
 
             for i in _to_remove:
                 self.streams.remove(i)
