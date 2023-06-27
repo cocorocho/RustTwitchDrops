@@ -1,68 +1,9 @@
 # Rust Twitch Drops
 
-### 🚀 Twitch Drops - Round 23 🚀
-#### Streamers
-<div id="streamers">
-	<ul>
-	    <li>
-            https://www.twitch.tv/auronplay
-            <div id="drop-name">Auron Large Box</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/Rubius
-            <div id="drop-name">Rubius Rainbow Chestplate</div>
-            <div id="drop-name">Rubius Rainbow Facemask</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/TheGrefg
-            <div id="drop-name">TheGrefg Semi Auto Rifle</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/rivers_gg
-            <div id="drop-name">Rivers Python</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/ibai
-            <div id="drop-name">ibai metal door</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/elxokas
-            <div id="drop-name">Elxokas Bandana</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/ElSpreen
-            <div id="drop-name">Spreen wooden door</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/Carola
-            <div id="drop-name">Carola Garage Door</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/Ricoy
-            <div id="drop-name">Ricoy AK47</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/knekro
-            <div id="drop-name">Knekro shotgun</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/Agustabell212
-            <div id="drop-name">Agustabell Thompson</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/Silithur
-            <div id="drop-name">Silithur Rocket Launcher</div>
-        </li>
-	    <li>
-            https://www.twitch.tv/IlloJuan
-            <div id="drop-name">Illojuan Sleeping bag</div>
-        </li>
-	</ul>
-</div>
 
-#### *Automatically farm Twitch drops for Rust*
+## Automatically farm Twitch drops for ~~Rust~~ 🔴 *Any Game* 🔴
 
-- #### Twitch Drops Round 23 ✔️
+- #### Twitch Drops Round 23 🏁
 - #### Twitch Drops Round 17 🏁
 
 ## Requirements
@@ -79,16 +20,42 @@
 
 2. Unzip ```Rust Twitch Drops.exe```
 
-3.  Run the bot
+3. Open Chrome and login on Twitch
+
+4.  Run the bot
 	- Running the file through command prompt is ** *recommended* **
 	or
 	- Double click the file
 
-4. Wait for Google Chrome (chromedriver) to open
+5. Follow instructions
 
-5. Login with your Twitch Account
+    Press `Enter` if you have successfully logged in on Chrome (Not automated browser)
 
-6. Leave the rest to RustTwitchDrops
+    At this point cookies from your actual browser will be copied and used for collecting drops
+    on automated browser.
+
+6. This bot was initially made for Rust Twitch drops but can be used for any game now.
+
+    - **Rust Twitch Drops**
+
+        When there are drops for Rust, streamer list will be automatically loaded.
+
+    - **Other games**
+        
+        If you want to use the bot to collect drops for other games, you will need to use `user_defined_streams.json` file which can be found in the directory.
+
+        Open the file and add URLs for streams.
+
+        Example:
+
+            user_defined_streams.json
+
+            [
+                "https://twitch.tv/foo",
+                "https://twitch.tv/bar"
+            ]
+
+7. Leave the rest to RustTwitchDrops
 
 ## FAQ
 **Q: What does this do?**
@@ -103,7 +70,6 @@ A: It uses an automated browser (**chromedriver**) in this case and does what yo
 
 **A**: Crashes may happen, there will be a ```log.txt``` file inside the directory. You can share the error with me.
 
-<div class="custom" id="hello">
-	[![Image Name](https://files.facepunch.com/lewis/1b0211b1/auron_1.jpg)](https://files.facepunch.com/lewis/1b0211b1/auron_1.jpg)
-</div>
-   
+## Caveats
+- Using your twitch account on other devices simultaneously may cause drops to not progress.
+- Minimizing browser may cause drops to not progress. 
